@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap");
+
+/* ------------------------------------------------------- */
+/* ローディング                                              */
+/* ------------------------------------------------------- */
+
+.loadingMain {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: linear-gradient(180deg, #cdebfb 0%, #fff9f4 100%);
+  font-family: "Zen Maru Gothic", "M PLUS Rounded 1c", sans-serif;
+}
+
+.loadingIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #ff8fae;
+  font-size: 32px;
+  box-shadow: 0 10px 22px -10px rgba(91, 67, 100, 0.35);
+  animation: spinBob 1.6s ease-in-out infinite;
+}
+
+@keyframes spinBob {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-8px) rotate(6deg); }
+}
+
+.loadingText {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6a5570;
+}
+
+/* ------------------------------------------------------- */
+/* Coming Soon ページ                                        */
+/* ------------------------------------------------------- */
+
+.main {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 24px;
+  background: linear-gradient(180deg, #cdebfb 0%, #fff9f4 45%, #ffe9f2 100%);
+  font-family: "Zen Maru Gothic", "M PLUS Rounded 1c", sans-serif;
+  color: #5b4364;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.55;
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blobA {
+  top: -40px;
+  right: -50px;
+  width: 180px;
+  height: 180px;
+  background: #ffd6e7;
+  animation: float 7s ease-in-out infinite;
+}
+
+.blobB {
+  bottom: -50px;
+  left: -60px;
+  width: 160px;
+  height: 160px;
+  background: #e8dbff;
+  animation: float 9s ease-in-out infinite reverse;
+}
+
+.blobC {
+  bottom: 120px;
+  right: 10%;
+  width: 90px;
+  height: 90px;
+  background: #c8f4e3;
+  animation: float 8s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(18px) translateX(-8px); }
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  padding: 44px 28px 40px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  border-radius: 32px;
+  box-shadow: 0 20px 44px -16px rgba(255, 143, 174, 0.5);
+}
+
+.sparkle {
+  position: absolute;
+  color: #ffe082;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.08));
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+.sparkle1 { top: 20px; left: 26px; font-size: 20px; animation-delay: 0s; }
+.sparkle2 { top: 36px; right: 30px; font-size: 16px; animation-delay: 0.6s; }
+.sparkle3 { bottom: 26px; left: 50%; font-size: 14px; animation-delay: 1.1s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; transform: scale(0.85) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.15) rotate(12deg); }
+}
+
+.iconWrap {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a9def9, #ffd6e7);
+  box-shadow: 0 12px 24px -10px rgba(91, 67, 100, 0.4), inset 0 0 0 3px #fff;
+  font-size: 40px;
+  color: #ff6f91;
+  animation: bob 3.2s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.title {
+  margin-top: 20px;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  letter-spacing: 0.02em;
+  color: #3f7ea6;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffb3c6, #ff8fae);
+  color: #fff;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  box-shadow: 0 8px 16px -6px rgba(255, 143, 174, 0.6);
+}
+
+.badgeIcon {
+  font-size: 13px;
+}
+
+.subtitle {
+  margin-top: 18px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #4a3b52;
+}
+
+.description {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #a08fa8;
+}
