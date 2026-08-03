@@ -49,6 +49,7 @@ interface Post {
 interface Props {
   posts: Post[];
   selectedPost: Post | null;
+  onSelectPost?: (post: Post) => void;
 }
 
 // ホーム画面のミニマップで使う共通のアクセントカラー
@@ -130,6 +131,7 @@ function getPostIcon(post: Post) {
 export default function TravelMap({
   posts,
   selectedPost,
+  onSelectPost,
 }: Props) {
   const center =
     posts.length > 0
@@ -162,11 +164,14 @@ export default function TravelMap({
           <Marker
             key={post.id}
             position={[
-              post.latitude,
-              post.longitude,
+                post.latitude,
+                post.longitude,
             ]}
             icon={getPostIcon(post)}
-          >
+            eventHandlers={{
+                click: () => onSelectPost?.(post),
+            }}
+            >
 
             <Popup>
               <div
