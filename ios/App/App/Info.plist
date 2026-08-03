@@ -66,5 +66,14 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+
+	<key>NSCameraUsageDescription</key>
+	<string>写真を撮影するためにカメラを使用します。</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>アルバムから写真を選択するために使用します。</string>
+
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>写真を保存するために使用します。</string>
 </dict>
 </plist>

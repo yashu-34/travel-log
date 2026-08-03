@@ -16,7 +16,77 @@ import {
 
 import styles from "./page.module.css";
 
+import { useEffect, useState } from "react";
+import {
+  collection,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import { db } from "@/firebase/config";
+
+import dynamic from "next/dynamic";
+
+const TravelMap = dynamic(
+  () => import("@/app/components/Map"),
+  {
+    ssr: false,
+  }
+);
+
+interface Post {
+  id: string;
+  uid: string;
+  userName: string;
+  userPhoto: string;
+  title: string;
+  content: string;
+  location: string;
+  category: string;
+  price: number;
+  rating: number;
+  tags: string[];
+  images: string[];
+  likes: number;
+  comments: number;
+  createdAt: any;
+  latitude: number;
+  longitude: number;
+}
+
+
 export default function HomePage() {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPost, setSelectedPost] =
+  useState<Post | null>(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const q = query(
+          collection(db, "posts"),
+          orderBy("createdAt", "desc")
+        );
+
+        const snapshot = await getDocs(q);
+
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Post[];
+
+        setPosts(data);
+
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
   return (
     <ProtectedRoute>
       <Header />
@@ -29,21 +99,20 @@ export default function HomePage() {
 
         {/* Map Card */}
         <section className={styles.heroCard}>
-          <div className={styles.heroInner}>
-            <PiSparkleFill className={`${styles.sparkle} ${styles.sparkle1}`} />
-            <PiSparkleFill className={`${styles.sparkle} ${styles.sparkle2}`} />
-            <PiSparkleFill className={`${styles.sparkle} ${styles.sparkle3}`} />
 
-            <div className={styles.heroContent}>
-              <div className={styles.heroIcon}>
-                <PiMapTrifoldFill />
-              </div>
-              <h2 className={styles.heroTitle}>旅マップ</h2>
-              <p className={styles.heroSubtitle}>
-                行った場所を記録しよう <PiAirplaneTiltFill className={styles.inlineIcon} />
-              </p>
-            </div>
-          </div>
+          {loading ? (
+
+            <p>読み込み中...</p>
+
+          ) : (
+
+            <TravelMap
+              posts={posts}
+              selectedPost={selectedPost}
+            />
+
+          )}
+
         </section>
 
         {/* 最近の旅 */}
@@ -61,11 +130,39 @@ export default function HomePage() {
           </div>
 
           <div className={styles.photoGrid}>
-            {[1, 2].map((item) => (
-              <div key={item} className={styles.polaroid}>
-                <div className={styles.tape} aria-hidden="true" />
-                <div className={styles.photoFrame}>
-                  <PiCameraFill className={styles.photoIcon} />
+            {posts.map((post) => (
+              <div
+                key={post.id}
+                className={styles.postCard}
+                onClick={() => setSelectedPost(post)}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                <img
+                  src={
+                    post.images?.length
+                      ? post.images[0]
+                      : "/no-image.png"
+                  }
+                  alt={post.title}
+                  className={styles.postImage}
+                />
+
+                <div className={styles.postBody}>
+                  <h3>{post.title}</h3>
+
+                  {post.location && (
+                    <p>📍 {post.location}</p>
+                  )}
+
+                  {post.rating > 0 && (
+                    <p>⭐ {post.rating}</p>
+                  )}
+
+                  {post.price && (
+                    <p>💰 ¥{post.price.toLocaleString()}</p>
+                  )}
                 </div>
               </div>
             ))}
